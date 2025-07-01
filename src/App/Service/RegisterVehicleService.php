@@ -14,7 +14,7 @@ use Fulll\App\Query\FindFleetByIdQuery;
 use Fulll\App\Query\FindFleetByIdQueryHandler;
 use Fulll\App\Query\FindVehicleByIdQuery;
 use Fulll\App\Query\FindVehicleByIdQueryHandler;
-use Fulll\Domain\AggregateRoot\Fleet;
+use Fulll\Domain\Model\Fleet;
 use Fulll\Domain\Model\Vehicle;
 use Fulll\Domain\ValueObject\FleetId;
 use Fulll\Domain\ValueObject\UserId;

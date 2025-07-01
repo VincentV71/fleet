@@ -17,7 +17,7 @@ class InMemoryVehicleRepository implements VehicleRepository
         self::$vehicles[$vehicle->getId()->getValue()] = $vehicle;
     }
 
-    public function update(Vehicle $vehicle): void
+    public function parkAt(Vehicle $vehicle): void
     {
         self::$vehicles[$vehicle->getId()->getValue()] = $vehicle;
     }

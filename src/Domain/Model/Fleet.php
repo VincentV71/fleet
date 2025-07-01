@@ -2,17 +2,16 @@
 
 declare(strict_types=1);
 
-namespace Fulll\Domain\AggregateRoot;
+namespace Fulll\Domain\Model;
 
-use Fulll\Domain\Exception\VehicleAlreadyRegisteredException;
-use Fulll\Domain\Model\Vehicle;
+use Fulll\Domain\Exception\VehicleAlreadyRegisteredInFleetException;
 use Fulll\Domain\ValueObject\FleetId;
 use Fulll\Domain\ValueObject\UserId;
 use Fulll\Domain\ValueObject\VehicleId;
 
 class Fleet
 {
-    private array $vehicles = []; // [VehicleId -> Vehicle, ...]
+    private array $vehicles = []; // [vehicleId -> Vehicle Model, ...]
 
     public function __construct(
         private readonly FleetId $id,
@@ -35,7 +34,7 @@ class Fleet
         $vehicleId = $vehicle->getId();
 
         if (isset($this->vehicles[$vehicleId->getValue()])) {
-            throw new VehicleAlreadyRegisteredException($vehicleId, $this->id);
+            throw new VehicleAlreadyRegisteredInFleetException($vehicleId, $this->id);
         }
 
         $this->vehicles[$vehicleId->getValue()] = $vehicle;
@@ -51,8 +50,8 @@ class Fleet
         return $this->vehicles[$vehicleId->getValue()] ?? null;
     }
 
-    public function getVehicles(): array
+    public function getVehiclesList(): array
     {
-        return array_values($this->vehicles);
+        return $this->vehicles;
     }
 }

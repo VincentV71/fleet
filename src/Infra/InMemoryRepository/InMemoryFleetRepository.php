@@ -5,7 +5,8 @@ declare(strict_types=1);
 namespace Fulll\Infra\InMemoryRepository;
 
 use Fulll\App\Interface\FleetRepository;
-use Fulll\Domain\AggregateRoot\Fleet;
+use Fulll\Domain\Model\Fleet;
+use Fulll\Domain\Model\Vehicle;
 use Fulll\Domain\ValueObject\FleetId;
 
 class InMemoryFleetRepository implements FleetRepository
@@ -17,7 +18,7 @@ class InMemoryFleetRepository implements FleetRepository
         self::$fleets[$fleet->getId()->getValue()] = $fleet;
     }
 
-    public function update(Fleet $fleet): void
+    public function registerVehicle(Fleet $fleet, Vehicle $vehicle): void
     {
         self::$fleets[$fleet->getId()->getValue()] = $fleet;
     }

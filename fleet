@@ -1,0 +1,23 @@
+#!/usr/bin/env php
+
+<?php
+
+use Fulll\Infra\Console\CreateFleetConsoleCommand;
+use Fulll\Infra\Console\LocalizeVehicleConsoleCommand;
+use Fulll\Infra\Console\RegisterVehicleConsoleCommand;
+use Symfony\Component\Console\Application;
+
+require __DIR__.'/vendor/autoload.php';
+
+try {
+    $application = new Application();
+
+    $application->add(new CreateFleetConsoleCommand());
+    $application->add(new RegisterVehicleConsoleCommand());
+    $application->add(new LocalizeVehicleConsoleCommand());
+
+    $application->run();
+
+} catch (Throwable $e) {
+    throw new RuntimeException('Can not start application : ' . $e->getMessage());
+}

@@ -3,7 +3,10 @@
     "license": "proprietary",
     "require": {
         "php": ">=8.2",
-        "behat/behat": "*"
+        "behat/behat": "*",
+        "symfony/console": "^7.3",
+        "doctrine/orm": "^3.4",
+        "symfony/cache": "^7.3"
     },
     "config": {
         "preferred-install": {

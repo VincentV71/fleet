@@ -3,16 +3,10 @@
 declare(strict_types=1);
 
 use Behat\Behat\Context\Context;
-use Fulll\App\Command\CreateFleetCommandHandler;
-use Fulll\App\Command\CreateVehicleCommandHandler;
-use Fulll\App\Command\ParkVehicleCommandHandler;
-use Fulll\App\Command\RegisterVehicleCommandHandler;
-use Fulll\App\Query\FindFleetByIdQueryHandler;
-use Fulll\App\Query\FindVehicleByIdQueryHandler;
+use Fulll\App\Service\Factory\ParkVehicleServiceFactory;
+use Fulll\App\Service\Factory\RegisterVehicleServiceFactory;
 use Fulll\App\Service\ParkVehicleService;
 use Fulll\App\Service\RegisterVehicleService;
-use Fulll\Infra\InMemoryRepository\InMemoryFleetRepository;
-use Fulll\Infra\InMemoryRepository\InMemoryVehicleRepository;
 
 class PersistanceContext implements Context
 {
@@ -22,20 +16,13 @@ class PersistanceContext implements Context
 
     public function __construct()
     {
-        $fleetRepository = new InMemoryFleetRepository();
-        $vehicleRepository = new InMemoryVehicleRepository();
-
-        $this->registerVehiculeService = new RegisterVehicleService(
-            new RegisterVehicleCommandHandler($fleetRepository, $vehicleRepository),
-            new CreateVehicleCommandHandler($vehicleRepository),
-            new CreateFleetCommandHandler($fleetRepository),
-            new FindVehicleByIdQueryHandler($vehicleRepository),
-            new FindFleetByIdQueryHandler($fleetRepository),
-        );
-
-        $this->parkVehicleService = new ParkVehicleService(
-            new ParkVehicleCommandHandler($vehicleRepository),
-        );
+        if (in_array('--tags=@in-db', $_SERVER['argv'] ?? [])) {
+            $this->registerVehiculeService = RegisterVehicleServiceFactory::withInDatabasePersistance();
+            $this->parkVehicleService = ParkVehicleServiceFactory::withInDatabasePersistance();
+        } else {
+            $this->registerVehiculeService = RegisterVehicleServiceFactory::withInMemoryPersistance();
+            $this->parkVehicleService = ParkVehicleServiceFactory::withInMemoryPersistance();
+        }
     }
 }
 

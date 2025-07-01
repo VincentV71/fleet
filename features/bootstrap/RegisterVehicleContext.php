@@ -5,7 +5,7 @@ declare(strict_types=1);
 use Behat\Step\Given;
 use Behat\Step\Then;
 use Behat\Step\When;
-use Fulll\Domain\Exception\VehicleAlreadyRegisteredException;
+use Fulll\Domain\Exception\VehicleAlreadyRegisteredInFleetException;
 use Fulll\Domain\ValueObject\FleetId;
 use Fulll\Domain\ValueObject\UserId;
 use Fulll\Domain\ValueObject\VehicleId;
@@ -83,7 +83,7 @@ class RegisterVehicleContext extends PersistanceContext
     #[Then('I should be informed this this vehicle named :vehicleId has already been registered into my fleet named :fleetId')]
     public function iShouldBeInformedThisThisVehicleHasAlreadyBeenRegisteredIntoMyFleet($vehicleId, $fleetId): void
     {
-        $expectedException = new VehicleAlreadyRegisteredException(
+        $expectedException = new VehicleAlreadyRegisteredInFleetException(
             new VehicleId($vehicleId),
             new FleetId($fleetId)
         );

@@ -6,7 +6,7 @@ namespace Fulll\Domain\ValueObject;
 
 use InvalidArgumentException;
 
-class VehicleId
+readonly final class VehicleId
 {
     private string $value;
 

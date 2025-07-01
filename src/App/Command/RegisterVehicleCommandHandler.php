@@ -29,6 +29,7 @@ readonly final class RegisterVehicleCommandHandler
         }
 
         $fleet->registerVehicle($vehicle);
-        $this->fleetRepository->update($fleet);
+
+        $this->fleetRepository->registerVehicle($fleet, $vehicle);
     }
 }

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Fulll\Domain\ValueObject;
 
-readonly class Location
+readonly final class Location
 {
     public function __construct(
         private float $latitude,

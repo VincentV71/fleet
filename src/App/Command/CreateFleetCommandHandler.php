@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Fulll\App\Command;
 
 use Fulll\App\Interface\FleetRepository;
-use Fulll\Domain\AggregateRoot\Fleet;
+use Fulll\Domain\Model\Fleet;
 
 readonly final class CreateFleetCommandHandler
 {

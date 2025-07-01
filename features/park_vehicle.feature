@@ -10,7 +10,7 @@ Feature: Park a vehicle
     And a vehicle named "4444_FF_13"
     When I have registered this vehicle named "4444_FF_13" into my fleet named "app_user_fleet"
 
-  @critical
+  @critical @in-db
   Scenario: Successfully park a vehicle
     And a location "11.22222" "-42.33333" "462"
     When I park my vehicle named "4444_FF_13" at this location "11.22222" "-42.33333" "462"

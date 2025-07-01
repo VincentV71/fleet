@@ -5,7 +5,7 @@ Feature: Register a vehicle
   As an application user
   I should be able to register my vehicle
 
-  @critical
+  @critical @in-db
   Scenario: I can register a vehicle
     Given my fleet named "app_user_fleet"
     And a vehicle named "1111_FF_13"

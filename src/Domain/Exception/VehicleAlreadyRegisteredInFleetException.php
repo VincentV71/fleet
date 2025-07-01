@@ -7,7 +7,7 @@ namespace Fulll\Domain\Exception;
 use Fulll\Domain\ValueObject\FleetId;
 use Fulll\Domain\ValueObject\VehicleId;
 
-class VehicleAlreadyRegisteredException extends \Exception
+class VehicleAlreadyRegisteredInFleetException extends \Exception
 {
     public function __construct(VehicleId $vehicleId, FleetId $fleetId)
     {

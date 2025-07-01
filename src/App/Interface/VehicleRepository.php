@@ -10,6 +10,6 @@ use Fulll\Domain\ValueObject\VehicleId;
 interface VehicleRepository
 {
     public function create(Vehicle $vehicle): void;
-    public function update(Vehicle $vehicle): void;
+    public function parkAt(Vehicle $vehicle): void;
     public function findById(VehicleId $id): ?Vehicle;
 }

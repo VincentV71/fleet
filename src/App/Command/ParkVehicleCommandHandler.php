@@ -22,6 +22,6 @@ readonly final class ParkVehicleCommandHandler
         }
 
         $vehicle->parkAt($command->getLocation());
-        $this->vehicleRepository->update($vehicle);
+        $this->vehicleRepository->parkAt($vehicle);
     }
 }
