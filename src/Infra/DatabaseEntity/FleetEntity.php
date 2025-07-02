@@ -10,10 +10,10 @@ use Doctrine\ORM\Mapping as ORM;
 use Fulll\Domain\Exception\EntityMappingException;
 use Fulll\Domain\Model\Fleet;
 use Fulll\Domain\Model\Vehicle;
-use Fulll\Domain\ValueObject\FleetId;
 use Fulll\Domain\ValueObject\Location;
 use Fulll\Domain\ValueObject\UserId;
 use Fulll\Domain\ValueObject\VehicleId;
+use Ramsey\Uuid\Rfc4122\UuidV7;
 use Throwable;
 
 #[ORM\Entity]
@@ -77,11 +77,17 @@ class FleetEntity
         return $this;
     }
 
+    /**
+     * Create a new FleetEntity from a Fleet Model
+     * @param Fleet $model
+     * @return FleetEntity
+     * @throws EntityMappingException
+     */
     public static function createFromModel(Fleet $model): FleetEntity
     {
         try {
             $entity = new FleetEntity();
-            $entity->setId($model->getId()->getValue());
+            $entity->setId($model->getId()->getBytes());
             $entity->setOwnerEmail($model->getUserId()->getValue());
 
             foreach($model->getVehiclesList() as $vehicle) {
@@ -96,10 +102,18 @@ class FleetEntity
         }
     }
 
+    /**
+     * Instantiate a Fleet Model from a FleetEntity
+     * @return Fleet
+     * @throws EntityMappingException
+     */
     public function mapToModel(): Fleet
     {
         try {
-            $model = new Fleet(new FleetId($this->id), new UserId($this->ownerEmail));
+            $model = new Fleet(
+                UuidV7::fromBytes($this->id),
+                new UserId($this->ownerEmail)
+            );
 
             foreach($this->getVehicles() as $vehicleEntity) {
                 $vehicleModel = new Vehicle(new VehicleId($vehicleEntity->getId()));

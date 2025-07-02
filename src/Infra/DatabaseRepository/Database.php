@@ -26,7 +26,7 @@ class Database
             );
             $connection = DriverManager::getConnection([
                 'driver' => 'pdo_sqlite',
-                'path' => __DIR__ . '/../../../fleet.sqlite',
+                'path' => __DIR__ . '/../../../fleet.db',
             ], $config);
 
             self::$entityManager = new EntityManager($connection, $config);

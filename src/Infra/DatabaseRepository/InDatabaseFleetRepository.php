@@ -6,9 +6,9 @@ use Doctrine\ORM\EntityManager;
 use Fulll\App\Interface\FleetRepository;
 use Fulll\Domain\Model\Fleet;
 use Fulll\Domain\Model\Vehicle;
-use Fulll\Domain\ValueObject\FleetId;
 use Fulll\Infra\DatabaseEntity\FleetEntity;
 use Fulll\Infra\DatabaseEntity\VehicleEntity;
+use Ramsey\Uuid\UuidInterface;
 
 class InDatabaseFleetRepository implements FleetRepository
 {
@@ -30,7 +30,7 @@ class InDatabaseFleetRepository implements FleetRepository
     {
         $fleetEntity = $this->entityManager
             ->getRepository(FleetEntity::class)
-            ->find($fleet->getId()->getValue());
+            ->find($fleet->getId()->getBytes());
 
         $vehicleEntity = $this->entityManager
             ->getRepository(VehicleEntity::class)
@@ -42,11 +42,11 @@ class InDatabaseFleetRepository implements FleetRepository
         $this->entityManager->flush();
     }
 
-    public function findById(FleetId $id): ?Fleet
+    public function findById(UuidInterface $id): ?Fleet
     {
         $entity = $this->entityManager
             ->getRepository(FleetEntity::class)
-            ->find($id->getValue());
+            ->find($id->getBytes());
 
         if(!$entity) {
             return null;

@@ -6,9 +6,9 @@ use Behat\Step\Given;
 use Behat\Step\Then;
 use Behat\Step\When;
 use Fulll\Domain\Exception\VehicleAlreadyRegisteredInFleetException;
-use Fulll\Domain\ValueObject\FleetId;
 use Fulll\Domain\ValueObject\UserId;
 use Fulll\Domain\ValueObject\VehicleId;
+use Ramsey\Uuid\Rfc4122\UuidV7;
 
 class RegisterVehicleContext extends PersistanceContext
 {
@@ -18,7 +18,7 @@ class RegisterVehicleContext extends PersistanceContext
     public function myFleetNamed($fleetId): void
     {
         $this->registerVehiculeService->createFleet(
-            new FleetId($fleetId),
+            UuidV7::fromString($fleetId),
             new UserId($this->generateMail($fleetId)),
         );
     }
@@ -34,7 +34,7 @@ class RegisterVehicleContext extends PersistanceContext
     {
         try {
             $this->registerVehiculeService->registerVehicle(
-                new FleetId($fleetId),
+                UuidV7::fromString($fleetId),
                 new VehicleId($vehicleId)
             );
         } catch (Throwable $e) {
@@ -45,7 +45,7 @@ class RegisterVehicleContext extends PersistanceContext
     #[Then('this vehicle named :vehicleId should be part of my vehicle fleet named :fleetId')]
     public function thisVehicleShouldBePartOfMyVehicleFleet($vehicleId, $fleetId): void
     {
-        $fleet = $this->registerVehiculeService->getFleetById(new FleetId($fleetId));
+        $fleet = $this->registerVehiculeService->getFleetById(UuidV7::fromString($fleetId));
         $vehicle = $this->registerVehiculeService->getVehicleById(new VehicleId($vehicleId));
 
         if(!$fleet || !$vehicle || !$fleet->hasVehicle($vehicle->getId())) {
@@ -56,7 +56,7 @@ class RegisterVehicleContext extends PersistanceContext
     #[Given('I have registered this vehicle named :vehicleId into my fleet named :fleetId')]
     public function iHaveRegisteredThisVehicleIntoMyFleet($vehicleId, $fleetId): void
     {
-        $fleet = $this->registerVehiculeService->getFleetById(new FleetId($fleetId));
+        $fleet = $this->registerVehiculeService->getFleetById(UuidV7::fromString($fleetId));
         $vehicle = $this->registerVehiculeService->getVehicleById(new VehicleId($vehicleId));
 
         if(!$fleet || !$vehicle) {
@@ -85,7 +85,7 @@ class RegisterVehicleContext extends PersistanceContext
     {
         $expectedException = new VehicleAlreadyRegisteredInFleetException(
             new VehicleId($vehicleId),
-            new FleetId($fleetId)
+            UuidV7::fromString($fleetId)
         );
 
         if($expectedException->getMessage() !== $this->exceptionMessage) {
@@ -99,8 +99,8 @@ class RegisterVehicleContext extends PersistanceContext
     public function theFleetOfAnotherUser($fleetId): void
     {
         $this->registerVehiculeService->createFleet(
-            new FleetId($fleetId),
-            new UserId($this->generateMail($fleetId)),
+            UuidV7::fromString($fleetId),
+            new UserId($this->generateMail($fleetId))
         );
     }
 

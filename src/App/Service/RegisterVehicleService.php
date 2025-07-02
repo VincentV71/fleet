@@ -16,9 +16,9 @@ use Fulll\App\Query\FindVehicleByIdQuery;
 use Fulll\App\Query\FindVehicleByIdQueryHandler;
 use Fulll\Domain\Model\Fleet;
 use Fulll\Domain\Model\Vehicle;
-use Fulll\Domain\ValueObject\FleetId;
 use Fulll\Domain\ValueObject\UserId;
 use Fulll\Domain\ValueObject\VehicleId;
+use Ramsey\Uuid\UuidInterface;
 
 readonly final class RegisterVehicleService
 {
@@ -31,7 +31,7 @@ readonly final class RegisterVehicleService
     ) {
     }
 
-    public function createFleet(FleetId $fleetId, UserId $userId): void
+    public function createFleet(UuidInterface $fleetId, UserId $userId): void
     {
         $this->createFleetCommandHandler->handle(new CreateFleetCommand($fleetId, $userId));
     }
@@ -46,12 +46,12 @@ readonly final class RegisterVehicleService
         return $this->findVehicleByIdQueryHandler->handle(new FindVehicleByIdQuery($vehicleId)) ?? null;
     }
 
-    public function getFleetById(FleetId $fleetId): ?Fleet
+    public function getFleetById(UuidInterface $fleetId): ?Fleet
     {
         return $this->findFleetByIdQueryHandler->handle(new FindFleetByIdQuery($fleetId)) ?? null;
     }
 
-    public function registerVehicle(FleetId $fleetId, VehicleId $vehicleId): void
+    public function registerVehicle(UuidInterface $fleetId, VehicleId $vehicleId): void
     {
         $this->registerVehicleHandler->handle(new RegisterVehicleCommand($fleetId, $vehicleId));
     }

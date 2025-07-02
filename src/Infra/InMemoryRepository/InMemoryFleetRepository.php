@@ -7,7 +7,7 @@ namespace Fulll\Infra\InMemoryRepository;
 use Fulll\App\Interface\FleetRepository;
 use Fulll\Domain\Model\Fleet;
 use Fulll\Domain\Model\Vehicle;
-use Fulll\Domain\ValueObject\FleetId;
+use Ramsey\Uuid\UuidInterface;
 
 class InMemoryFleetRepository implements FleetRepository
 {
@@ -15,16 +15,16 @@ class InMemoryFleetRepository implements FleetRepository
 
     public function create(Fleet $fleet): void
     {
-        self::$fleets[$fleet->getId()->getValue()] = $fleet;
+        self::$fleets[$fleet->getId()->toString()] = $fleet;
     }
 
     public function registerVehicle(Fleet $fleet, Vehicle $vehicle): void
     {
-        self::$fleets[$fleet->getId()->getValue()] = $fleet;
+        self::$fleets[$fleet->getId()->toString()] = $fleet;
     }
 
-    public function findById(FleetId $id): ?Fleet
+    public function findById(UuidInterface $id): ?Fleet
     {
-        return self::$fleets[$id->getValue()] ?? null;
+        return self::$fleets[$id->toString()] ?? null;
     }
 }

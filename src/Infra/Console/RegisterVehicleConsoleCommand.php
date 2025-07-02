@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Fulll\Infra\Console;
 
 use Fulll\App\Service\Factory\RegisterVehicleServiceFactory;
-use Fulll\Domain\ValueObject\FleetId;
 use Fulll\Domain\ValueObject\VehicleId;
+use Ramsey\Uuid\Rfc4122\UuidV7;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -26,7 +26,7 @@ final class RegisterVehicleConsoleCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $fleetId = new FleetId($input->getArgument('fleetId'));
+        $fleetId = UuidV7::fromString($input->getArgument('fleetId'));
         $vehicleId = new VehicleId($input->getArgument('vehiclePlateNumber'));
         $registerVehicleService = RegisterVehicleServiceFactory::withInDatabasePersistance();
 

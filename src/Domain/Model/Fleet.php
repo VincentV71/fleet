@@ -5,21 +5,21 @@ declare(strict_types=1);
 namespace Fulll\Domain\Model;
 
 use Fulll\Domain\Exception\VehicleAlreadyRegisteredInFleetException;
-use Fulll\Domain\ValueObject\FleetId;
 use Fulll\Domain\ValueObject\UserId;
 use Fulll\Domain\ValueObject\VehicleId;
+use Ramsey\Uuid\UuidInterface;
 
 class Fleet
 {
     private array $vehicles = []; // [vehicleId -> Vehicle Model, ...]
 
     public function __construct(
-        private readonly FleetId $id,
+        private readonly UuidInterface $id,
         private readonly UserId $userId
     ) {
     }
 
-    public function getId(): FleetId
+    public function getId(): UuidInterface
     {
         return $this->id;
     }

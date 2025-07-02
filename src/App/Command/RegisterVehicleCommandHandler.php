@@ -20,7 +20,9 @@ readonly final class RegisterVehicleCommandHandler
     {
         $fleet = $this->fleetRepository->findById($command->getFleetId());
         if (!$fleet) {
-            throw new InvalidArgumentException(sprintf('Fleet "%s" not found', $command->getFleetId()));
+            throw new InvalidArgumentException(
+                sprintf('Fleet "%s" not found', $command->getFleetId()->toString())
+            );
         }
 
         $vehicle = $this->vehicleRepository->findById($command->getVehicleId());

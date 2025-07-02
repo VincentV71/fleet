@@ -110,6 +110,12 @@ class VehicleEntity
         return $this->getLat() && $this->getLng();
     }
 
+    /**
+     * Create a new VehicleEntity from a Vehicle Model
+     * @param Vehicle $model
+     * @return VehicleEntity
+     * @throws EntityMappingException
+     */
     public static function createFromModel(Vehicle $model): VehicleEntity
     {
         try {
@@ -130,6 +136,12 @@ class VehicleEntity
         }
     }
 
+    /**
+     * Register VehicleEntity location from the Vechicle Model Location
+     * @param Vehicle $model
+     * @return $this
+     * @throws EntityMappingException
+     */
     public function parkAt(Vehicle $model): VehicleEntity
     {
         try {
@@ -147,6 +159,11 @@ class VehicleEntity
         }
     }
 
+    /**
+     * Instantiate a Vehicle Model from a VehicleEntity
+     * @return Vehicle
+     * @throws EntityMappingException
+     */
     public function mapToModel(): Vehicle
     {
         try {

@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Fulll\Infra\Console;
 
 use Fulll\App\Service\Factory\RegisterVehicleServiceFactory;
-use Fulll\Domain\ValueObject\FleetId;
 use Fulll\Domain\ValueObject\UserId;
+use Ramsey\Uuid\Uuid;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -25,17 +25,15 @@ final class CreateFleetConsoleCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $timestamps = (new \DateTime('now'))->format('YmdHisu');
-        $fleetId = "fleetId_CliCommand_" . $timestamps;
-
+        $fleetId = Uuid::uuid7();
         $registerVehicleService = RegisterVehicleServiceFactory::withInDatabasePersistance();
 
         $registerVehicleService->createFleet(
-            new FleetId($fleetId),
+            $fleetId,
             new UserId($input->getArgument('userId'))
         );
 
-        $output->writeln($fleetId);
+        $output->writeln($fleetId->toString());
 
         return Command::SUCCESS;
     }

@@ -6,7 +6,8 @@
         "behat/behat": "*",
         "symfony/console": "^7.3",
         "doctrine/orm": "^3.4",
-        "symfony/cache": "^7.3"
+        "symfony/cache": "^7.3",
+        "ramsey/uuid": "^4.9"
     },
     "config": {
         "preferred-install": {

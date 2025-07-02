@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Fulll\Infra\Console;
 
 use Fulll\App\Service\Factory\RegisterVehicleServiceFactory;
-use Fulll\Domain\ValueObject\FleetId;
 use Fulll\Domain\ValueObject\VehicleId;
+use Ramsey\Uuid\Rfc4122\UuidV7;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -27,7 +27,6 @@ final class LocalizeVehicleConsoleCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $vehicleId = new VehicleId($input->getArgument('vehiclePlateNumber'));
-        $fleetId = new FleetId($input->getArgument('fleetId'));
         $registerVehicleService = RegisterVehicleServiceFactory::withInDatabasePersistance();
 
         $vehicle = $registerVehicleService->getVehicleById($vehicleId);

@@ -24,12 +24,14 @@ vendor/behat/behat/bin/behat
 # Step 2 :
 - See **"step_2"** branch.
 - Enable PHP extensions : **pdo_sqlite** and **sqlite3** (for the Sqlite CLI).
-- Database managed with 'doctrine/orm'.
+- Database managed with "doctrine/orm".
 - Console Commands made with the "symfony/console" component.
+- Use "ramsey/uuid".
 - Run "composer install" to install those new libs.
 - Within the root directory ("fleet"), run the console commands like this :
 ```
 php fleet create <userId>
+...
 ```
 - Running the tests with **in-db persistance** :
 ```
@@ -37,6 +39,6 @@ vendor/behat/behat/bin/behat --tags="@in-db"
 ```
 - For DB schema information, run :
 ```
-sqlite3 fleet.sqlite
+sqlite3 fleet.db
 .schema
 ```

@@ -6,9 +6,9 @@ Feature: Park a vehicle
   I should be able to indicate my vehicle location
 
   Background:
-    Given my fleet named "app_user_fleet"
+    Given my fleet named "0197ca8a-388d-70fc-8bcf-d5618a71f01c"
     And a vehicle named "4444_FF_13"
-    When I have registered this vehicle named "4444_FF_13" into my fleet named "app_user_fleet"
+    When I have registered this vehicle named "4444_FF_13" into my fleet named "0197ca8a-388d-70fc-8bcf-d5618a71f01c"
 
   @critical @in-db
   Scenario: Successfully park a vehicle
