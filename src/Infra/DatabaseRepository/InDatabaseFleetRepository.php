@@ -2,6 +2,7 @@
 
 namespace Fulll\Infra\DatabaseRepository;
 
+use Doctrine\ORM\EntityManager;
 use Fulll\App\Interface\FleetRepository;
 use Fulll\Domain\Model\Fleet;
 use Fulll\Domain\Model\Vehicle;
@@ -9,8 +10,15 @@ use Fulll\Domain\ValueObject\FleetId;
 use Fulll\Infra\DatabaseEntity\FleetEntity;
 use Fulll\Infra\DatabaseEntity\VehicleEntity;
 
-class InDatabaseFleetRepository extends Connection implements FleetRepository
+class InDatabaseFleetRepository implements FleetRepository
 {
+    private EntityManager $entityManager;
+
+    public function __construct()
+    {
+        $this->entityManager = Database::getEntityManager();
+    }
+
     public function create(Fleet $fleet): void
     {
         $fleetEntity = FleetEntity::createFromModel($fleet);
